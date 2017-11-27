@@ -1,23 +1,65 @@
 package com.ick.ick_asystent;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Leki extends AppCompatActivity {
+
+    String[] nameArray = {"Tabletka 1","Syrop","Tabletka 2"};
+
+    String[] infoArray = {
+            "7:00, 19:00",
+            "20:00",
+            "20:00"
+    };
+
+    Integer[] imageArray = {R.drawable.ic_action_name,
+            R.drawable.syrop,
+            R.drawable.ic_action_name};
+
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leki);
+
+        LekListAdapter whatever = new LekListAdapter(this, nameArray, infoArray, imageArray);
+        listView = findViewById(R.id.lekiListView);
+        listView.setAdapter(whatever);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), Main.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+
+    }
+
+    public void onClick_nowyLek(View v){
+        startActivity(new Intent(this, NowyLek.class));
+    }
+
+    public void onClick_zamienniki(View v){
+        startActivity(new Intent(this, ZamiennikiLekow.class));
+    }
+
+    public void onClick_info(View v){
+        startActivity(new Intent(this, InformacjeLeki.class));
     }
 
 
 }
+
+

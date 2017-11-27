@@ -10,13 +10,13 @@
     <ListView
         android:id="@+id/lekiListView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="350dp"
         android:layout_marginBottom="4dp"
+        android:entries="@array/ListView_Leki"
         app:layout_constraintBottom_toTopOf="@id/lekiButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:entries="@array/ListView_Leki">
+        app:layout_constraintTop_toTopOf="parent">
 
     </ListView>
 
@@ -25,6 +25,7 @@
         android:id="@+id/lekiButtons"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +33,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,8 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@android:drawable/star_big_on"
+                android:drawableLeft="@android:drawable/ic_menu_compass"
+                android:onClick="onClick_dieta"
                 android:text="Moja Dieta"
                 android:textSize="24dp"
                 android:textStyle="bold"
@@ -63,24 +65,25 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="16dp"
-                android:drawableLeft="@android:drawable/star_big_on"
+                android:drawableLeft="@drawable/przepisy"
+                android:onClick="onClick_przepis"
                 android:text="Przepisy"
                 android:textSize="24dp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/button3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button1"
-                app:layout_constraintBottom_toTopOf="@+id/button3"/>
+                app:layout_constraintTop_toBottomOf="@+id/button1" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="16dp"
-                android:drawableLeft="@android:drawable/star_big_on"
+                android:drawableLeft="@drawable/zmien"
+                android:onClick="onClick_modPosilek"
                 android:text="Zmień Posiłek"
                 android:textSize="24dp"
                 android:textStyle="bold"
