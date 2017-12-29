@@ -36,4 +36,8 @@ public class Main extends AppCompatActivity {
         startActivity(new Intent (this, Profil.class));
     }
 
+    public void onClick_Emergency(View view){
+        startActivity(new Intent(this, Emergency.class ));
+    }
+
 }

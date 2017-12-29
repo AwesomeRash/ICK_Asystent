@@ -10,7 +10,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         tools:context="com.ick.ick_asystent.Main">
 
         <Button
@@ -59,7 +59,7 @@
             android:layout_marginTop="16dp"
             android:drawableLeft="@drawable/zakupy"
             android:onClick="onClick_Zakupy"
-            android:text="Zakupy"
+            android:text="Lista Zakupow"
             android:textSize="24dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/button5"
@@ -111,6 +111,25 @@
             android:layout_marginEnd="40dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="16dp"
+            android:drawableLeft="@drawable/przypomnienia"
+            android:onClick="onClick_Emergency"
+            android:text="Raportowanie"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button6"
+            app:layout_constraintBottom_toTopOf="@+id/button8" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
             android:drawableLeft="@drawable/profil"
             android:onClick="onClick_Profil"
             android:text="Profil"
@@ -119,7 +138,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
+            app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+
 
 
     </android.support.constraint.ConstraintLayout>

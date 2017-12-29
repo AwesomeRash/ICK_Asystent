@@ -27,6 +27,7 @@
             android:layout_width="164dp"
             android:layout_height="72dp"
             android:layout_weight="1"
+            android:onClick="onClick_removeItem"
             android:backgroundTint="@android:color/holo_red_light"
             app:srcCompat="@drawable/usun" />
     </LinearLayout>
