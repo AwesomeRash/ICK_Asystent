@@ -8,9 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class Rachunki extends AppCompatActivity {
 
-    String[] nameArray= {"Prąd", "Gaz", "Woda"};
+   // String[] nameArray= {"Prąd", "Gaz"};
 
     String[] infoArray= {"120.00", "140.00", "260.00"};
 
@@ -23,12 +25,22 @@ public class Rachunki extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rachunki);
 
-        RachunekListAdapter rachAdp = new RachunekListAdapter(this, nameArray, infoArray, dateArray);
-        listView = findViewById(R.id.lekiListView);
-        listView.setAdapter(rachAdp);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        DBHelper myDB = new DBHelper(getApplicationContext());
+
+        //RachunekListAdapter rachAdp = new RachunekListAdapter(this, nameArray, infoArray, dateArray);
+        ArrayList<RachunekDBModel> rachunki = myDB.getAllRachunek();
+        String[] nameArray = new String[rachunki.size()];
+        RachunekListAdapter rachAdp = new RachunekListAdapter(this, rachunki, nameArray);
+        listView = findViewById(R.id.lekiListView);
+        listView.setAdapter(rachAdp);
 
     }
 

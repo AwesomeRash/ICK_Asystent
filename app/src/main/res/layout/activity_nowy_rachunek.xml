@@ -94,7 +94,7 @@
                 tools:layout_editor_absoluteY="182dp" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/czestoscSpinner"
                 android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
@@ -183,6 +183,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:onClick="onClick_newBill"
                 android:text="Zatwierdź"
                 android:textSize="20sp" />
         </LinearLayout>

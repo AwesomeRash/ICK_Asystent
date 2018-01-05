@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Roderick on 27.11.2017.
  */
@@ -34,6 +36,35 @@ public class RachunekListAdapter extends ArrayAdapter {
         this.dateArray = dateArrayParam;
         this.nameArray = nameArrayParam;
         this.infoArray = infoArrayParam;
+
+    }
+
+    public RachunekListAdapter(Activity context, ArrayList<RachunekDBModel> rachunki, String[] nameArrayParam){
+        super(context,R.layout.listview_row, nameArrayParam);
+
+        this.context=context;
+        ArrayList<String> date = new ArrayList<>();
+        ArrayList<String> name = new ArrayList<>();
+        ArrayList<String> info = new ArrayList<>();
+
+        if(rachunki.size()!=0) {
+            for (RachunekDBModel mdl : rachunki) {
+                int rachSum = mdl.rachunek1 + mdl.rachunek2 + mdl.rachunek3;
+
+                date.add(mdl.ostatnioOplacony); // ToDo: Do zmiany na poprawną datę w zależności od wybranego typu.
+                System.out.println("NAZWA: "+mdl.nazwa+"        OSTATNIO OPLACONY: "+mdl.ostatnioOplacony);
+                name.add(mdl.nazwa);
+                info.add(Double.toString(rachSum / 3));
+            }
+
+            this.dateArray = date.toArray(new String[date.size()]);
+            this.nameArray = name.toArray(new String[name.size()]);
+            this.infoArray = info.toArray(new String[info.size()]);
+        } else{
+            dateArray = new String[]{};
+            nameArray = new String[]{};
+            infoArray = new String[]{};
+        }
 
     }
 
