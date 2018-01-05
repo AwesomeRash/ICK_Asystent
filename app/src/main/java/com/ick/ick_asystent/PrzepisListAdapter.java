@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Roderick on 27.11.2017.
  */
@@ -30,6 +32,28 @@ public class PrzepisListAdapter extends ArrayAdapter {
         this.trudArray = trudArrayParam;
         this.czasArray = czasArrayParam;
 
+    }
+
+    public PrzepisListAdapter(Activity context, ArrayList<PrzepisDBModel> przepisy, String[] nameArray){
+        super(context, R.layout.listview_row, nameArray);
+
+        this.context=context;
+        ArrayList<String> name = new ArrayList<>();
+        ArrayList<String> trud = new ArrayList<>();
+        ArrayList<String> czas = new ArrayList<>();
+
+        ArrayList<Integer> img = new ArrayList<>();
+
+        for(PrzepisDBModel przep: przepisy){
+            name.add(przep.nazwa);
+            trud.add(przep.trudnosc);
+            czas.add(przep.czas);
+            img.add(przep.id);
+        }
+        this.nameArray = name.toArray(new String[name.size()]);
+        this.trudArray = trud.toArray(new String[trud.size()]);
+        this.czasArray = czas.toArray(new String[czas.size()]);
+        this.imageIDarray = img.toArray(new Integer[img.size()]);
     }
 
     public View getView(int position, View view, ViewGroup parent) {

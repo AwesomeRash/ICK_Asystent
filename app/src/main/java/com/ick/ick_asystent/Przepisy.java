@@ -1,8 +1,13 @@
 package com.ick.ick_asystent;
 
+import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class Przepisy extends AppCompatActivity {
 
@@ -28,9 +33,34 @@ public class Przepisy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_przepisy);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        PrzepisListAdapter przeAdp = new PrzepisListAdapter(this, nameArray, trudArray, czasArray, imageArray);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        DBHelper myDB = new DBHelper(getApplicationContext());
+
+        ArrayList<PrzepisDBModel> przepisy = myDB.getAllPrzepis();
+        String[] nameArray = new String[przepisy.size()];
+
+        PrzepisListAdapter przeAdp = new PrzepisListAdapter(this, przepisy,nameArray);
         listView = findViewById(R.id.przepisyList);
         listView.setAdapter(przeAdp);
+
+        myDB.close();
+
+    }
+
+    public void onClick_PrzepisListItem(View view){
+        DBHelper myDB = new DBHelper(getApplicationContext());
+        Intent intent = new Intent(this, przepisView.class);
+        Bundle b = new Bundle();
+        b.putInt("przepis_id", 1); //TODO: Przekazać poprawne ID
+        intent.putExtras(b);
+        startActivity(intent);
+
     }
 }

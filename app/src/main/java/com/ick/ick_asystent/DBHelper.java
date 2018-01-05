@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ick_asystent.db";
     public static final String LEKI_NAME = "leki";
     public static final String RACHUNKI_NAME = "rach";
+    public static final String PRZEPISY_NAME = "przepisy";
 
 
     public DBHelper(Context context){
@@ -31,21 +32,29 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("create table "+RACHUNKI_NAME+" "+
         "(id integer primary key, nazwa text, ostatnioOplacony text, jakCzesto integer, rachunek1 integer, rachunek2 integer, rachunek3 integer)"
         );
+        db.execSQL("create table "+PRZEPISY_NAME+" "+
+        "(id integer primary key, nazwa text, trudnosc text, czas text, składniki text, przepis text, obraz integer)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVerion, int newVersion) {
        db.execSQL("DROP TABLE IF EXISTS "+LEKI_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+RACHUNKI_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+PRZEPISY_NAME);
        onCreate(db);
     }
 
     public void resetDB(){
-        onUpgrade(getWritableDatabase(), 1, 2);
+        SQLiteDatabase currentDB = getWritableDatabase();
+        int version = currentDB.getVersion();
+        onUpgrade(currentDB, version, version+1 );
+
     }
 
 
     // inne metody do obsługi DB idą tutaj
 
+
+    // LEKARSTWA
     public LekDBModel getLek(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from "+LEKI_NAME+" where id="+id+"", null);
@@ -116,7 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-
+// RACHUNKI
     public RachunekDBModel getRachunek(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from "+RACHUNKI_NAME+" where id="+id+"", null);
@@ -196,6 +205,97 @@ public class DBHelper extends SQLiteOpenHelper {
         }
        return rachunki;
     }
+
+
+    // PRZEPISY
+    public PrzepisDBModel getPrzepis(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from "+PRZEPISY_NAME+" where id="+id+"", null);
+
+        if(res != null)
+            res.moveToFirst();
+
+        PrzepisDBModel przepis = new PrzepisDBModel(
+                res.getInt(res.getColumnIndex("id")),
+                res.getString(res.getColumnIndex("nazwa")),
+                res.getString(res.getColumnIndex("trudnosc")),
+                res.getString(res.getColumnIndex("czas")),
+                res.getString(res.getColumnIndex("skladniki")),
+                res.getString(res.getColumnIndex("przepis")),
+                res.getInt(res.getColumnIndex("obraz"))
+        );
+
+        return przepis;
+    }
+
+    public int getPrzepisID(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("Select * from "+PRZEPISY_NAME+" where nazwa="+name+"",null);
+
+        return res.getInt(res.getColumnIndex("id"));
+    }
+
+    public boolean updatePrzepis(int id, String nazwa, String trudnosc, String czas, String skladniki, String przepis, int obraz){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("trudnosc",trudnosc);
+        contentValues.put("czas",czas);
+        contentValues.put("skladniki",skladniki);
+        contentValues.put("przepis",przepis);
+        contentValues.put("obraz",obraz);
+        db.update(PRZEPISY_NAME, contentValues, "id=?", new String[]{Integer.toString(id)});
+        return true;
+    }
+
+    public long createPrzepis(String nazwa, String trudnosc, String czas, String skladniki, String przepis, int obraz){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("trudnosc",trudnosc);
+        contentValues.put("czas",czas);
+        contentValues.put("skladniki",skladniki);
+        contentValues.put("przepis",przepis);
+        contentValues.put("obraz",obraz);
+
+        long db_id= db.insert(PRZEPISY_NAME, null,contentValues);
+
+        return db_id;
+    }
+
+    public Integer deletePrzepis(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(PRZEPISY_NAME, "id = ?", new String[] {Integer.toString(id)});
+    }
+
+
+    public ArrayList<PrzepisDBModel> getAllPrzepis(){
+        ArrayList<PrzepisDBModel> przepisy = new ArrayList<>();
+        String selectQuary = "SELECT * FROM "+PRZEPISY_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuary,null);
+
+        if(res.moveToFirst()){
+            do{
+                PrzepisDBModel prz = new PrzepisDBModel(
+                        res.getInt(res.getColumnIndex("id")),
+                        res.getString(res.getColumnIndex("nazwa")),
+                        res.getString(res.getColumnIndex("trudnosc")),
+                        res.getString(res.getColumnIndex("czas")),
+                        res.getString(res.getColumnIndex("skladniki")),
+                        res.getString(res.getColumnIndex("przepis")),
+                        res.getInt(res.getColumnIndex("obraz"))
+                );
+
+                przepisy.add(prz);
+            }
+            while(res.moveToNext());
+        }
+        return przepisy;
+    }
+
 
 
 }

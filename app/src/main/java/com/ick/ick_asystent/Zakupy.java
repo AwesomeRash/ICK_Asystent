@@ -74,8 +74,11 @@ public class Zakupy extends AppCompatActivity {
     }
 
     public void onClick_addItem(View view){
-        obecnaLista.add(coKupic.getText().toString());
-        _refresh();
+        String itemTxt= coKupic.getText().toString();
+        if(!itemTxt.matches("")) {
+            obecnaLista.add(itemTxt);
+            _refresh();
+        }
     }
 
     private void _refresh(){

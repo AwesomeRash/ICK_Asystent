@@ -13,6 +13,10 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TYLKO DO TESTOWANIA/USUWANIA RZECZY.
+        DBHelper myDB = new DBHelper(getApplicationContext());
+        myDB.resetDB();
+
     }
 
     public void onClick_Leki(View view){
