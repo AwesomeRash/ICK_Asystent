@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+LEKI_NAME+" "+
-        "(id integer primary key, nazwa text, rodzaj integer, kiedy text)"
+        "(id integer primary key, nazwa text, rodzaj integer, koniecPrzyjmowania text,kiedy text)"
         );
         db.execSQL("create table "+RACHUNKI_NAME+" "+
         "(id integer primary key, nazwa text, ostatnioOplacony text, jakCzesto integer, rachunek1 integer, rachunek2 integer, rachunek3 integer)"
@@ -37,6 +37,10 @@ public class DBHelper extends SQLiteOpenHelper {
        db.execSQL("DROP TABLE IF EXISTS "+LEKI_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+RACHUNKI_NAME);
        onCreate(db);
+    }
+
+    public void resetDB(){
+        onUpgrade(getWritableDatabase(), 1, 2);
     }
 
 
@@ -52,27 +56,30 @@ public class DBHelper extends SQLiteOpenHelper {
         LekDBModel lekDBModel = new LekDBModel(res.getInt(res.getColumnIndex("id")),
                                                 res.getString(res.getColumnIndex("nazwa")),
                                                 res.getInt(res.getColumnIndex("rodzaj")),
+                                                res.getString(res.getColumnIndex("koniecPrzyjmowania")),
                                                 res.getString(res.getColumnIndex("kiedy"))
                                                 );
 
         return lekDBModel;
     }
 
-    public boolean updateLek(Integer id, String nazwa, Integer rodzaj, String kiedy ){
+    public boolean updateLek(Integer id, String nazwa, Integer rodzaj, String koniecPrzyjmowania, String kiedy ){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("nazwa",nazwa);
         contentValues.put("kiedy",kiedy);
         contentValues.put("rodzaj",rodzaj);
+        contentValues.put("koniecPrzyjmowania", koniecPrzyjmowania);
         db.update(LEKI_NAME, contentValues, "id=?", new String[]{Integer.toString(id)});
         return true;
     }
 
-    public long createLek(String nazwa, Integer rodzaj, String kiedy ){
+    public long createLek(String nazwa, Integer rodzaj, String koniecPrzyjmowania, String kiedy ){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("nazwa",nazwa);
         contentValues.put("kiedy",kiedy);
+        contentValues.put("koniecPrzyjmowania",koniecPrzyjmowania);
         contentValues.put("rodzaj",rodzaj);
         long db_id = db.insert(LEKI_NAME, null, contentValues);
 
@@ -84,20 +91,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(LEKI_NAME, "id = ?", new String[] {Integer.toString(id)});
     }
 
- /*   public ArrayList<String> getAllLek(){
-        ArrayList<String> arrayList = new ArrayList<>();
+    public ArrayList<LekDBModel> getAllLek(){
+        ArrayList<LekDBModel> arrayList = new ArrayList<>();
+        String selectQuary = "SELECT * FROM "+LEKI_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from "+LEKI_NAME, null);
-        res.moveToFirst();
+        Cursor res = db.rawQuery(selectQuary,null);
 
-        while(!res.isAfterLast()){
-            arrayList.add(res.getString(res.getColumnIndex()));
-            res.moveToNext();
+        if(res.moveToFirst()){
+            do{
+                LekDBModel lekDBModel = new LekDBModel(res.getInt(res.getColumnIndex("id")),
+                        res.getString(res.getColumnIndex("nazwa")),
+                        res.getInt(res.getColumnIndex("rodzaj")),
+                        res.getString(res.getColumnIndex("koniecPrzyjmowania")),
+                        res.getString(res.getColumnIndex("kiedy"))
+                );
+
+                arrayList.add(lekDBModel);
+            }
+            while(res.moveToNext());
         }
-
         return arrayList;
-    }*/
+    }
+
+
+
 
     public RachunekDBModel getRachunek(int id){
         SQLiteDatabase db = this.getReadableDatabase();

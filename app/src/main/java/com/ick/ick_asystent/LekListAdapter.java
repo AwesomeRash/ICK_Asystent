@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Roderick on 27.11.2017.
  */
@@ -25,6 +27,33 @@ public class LekListAdapter extends ArrayAdapter {
 
     //to store the list of countries
     private final String[] infoArray;
+
+    public LekListAdapter(Activity context, ArrayList<LekDBModel> leki, String[] nameArray){
+        super(context,R.layout.listview_row, nameArray);
+
+        this.context=context;
+        ArrayList<String> name = new ArrayList<>();
+        ArrayList<String> info = new ArrayList<>();
+        ArrayList<Integer> img = new ArrayList<>();
+
+        for (LekDBModel lek: leki) {
+
+            name.add(lek.nazwa);
+            info.add(lek.kiedy);
+
+            if(lek.rodzaj == 0){
+                img.add(R.drawable.ic_action_name);
+            } else if (lek.rodzaj==1){
+                img.add(R.drawable.syrop);
+            }else if(lek.rodzaj==2){
+                img.add(R.drawable.ic_sync_black_24dp);
+            }
+
+        }
+        this.nameArray = name.toArray(new String[name.size()]);
+        this.infoArray = info.toArray(new String[info.size()]);
+        this.imageIDarray = img.toArray(new Integer[img.size()]);
+    }
 
     public LekListAdapter(Activity context, String[] nameArrayParam, String[] infoArrayParam, Integer[] imageIDArrayParam){
 

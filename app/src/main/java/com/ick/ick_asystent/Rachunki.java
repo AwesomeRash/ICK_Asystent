@@ -39,7 +39,7 @@ public class Rachunki extends AppCompatActivity {
         ArrayList<RachunekDBModel> rachunki = myDB.getAllRachunek();
         String[] nameArray = new String[rachunki.size()];
         RachunekListAdapter rachAdp = new RachunekListAdapter(this, rachunki, nameArray);
-        listView = findViewById(R.id.lekiListView);
+        listView = findViewById(R.id.rachunkiListView);
         listView.setAdapter(rachAdp);
 
     }

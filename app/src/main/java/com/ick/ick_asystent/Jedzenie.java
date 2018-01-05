@@ -30,7 +30,7 @@ public class Jedzenie extends AppCompatActivity {
         setContentView(R.layout.activity_jedzenie);
 
         LekListAdapter whatever = new LekListAdapter(this, nameArray, infoArray, imageArray);
-        listView = findViewById(R.id.lekiListView);
+        listView = findViewById(R.id.rachunkiListView);
         listView.setAdapter(whatever);
 
         ActionBar actionBar = getSupportActionBar();

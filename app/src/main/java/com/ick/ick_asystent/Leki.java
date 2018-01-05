@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 
 public class Leki extends AppCompatActivity {
 
@@ -31,12 +33,23 @@ public class Leki extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leki);
 
-        LekListAdapter whatever = new LekListAdapter(this, nameArray, infoArray, imageArray);
-        listView = findViewById(R.id.lekiListView);
-        listView.setAdapter(whatever);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        DBHelper myDB = new DBHelper(getApplicationContext());
+
+
+        ArrayList<LekDBModel> leki = myDB.getAllLek();
+        String[] nameArray = new String[leki.size()];
+
+        LekListAdapter lekAdapter = new LekListAdapter(this, leki, nameArray);
+        listView = findViewById(R.id.lekiListView);
+        listView.setAdapter(lekAdapter);
 
     }
 

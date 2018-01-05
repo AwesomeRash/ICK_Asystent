@@ -8,16 +8,18 @@ public class LekDBModel {
     Integer id;
     String nazwa;
     Integer rodzaj;
+    String koniecPrzyjmowania;
     String kiedy;
 
     public  LekDBModel(){
 
     }
 
-    public  LekDBModel(int id, String name, int type, String when){
-        this.id= id;
-        nazwa= name;
-        rodzaj= type;
-        kiedy= when;
+    public  LekDBModel(int id, String name, int type, String end, String when){
+        this.id = id;
+        nazwa = name;
+        rodzaj = type;
+        kiedy = when;
+        koniecPrzyjmowania = end;
     }
 }

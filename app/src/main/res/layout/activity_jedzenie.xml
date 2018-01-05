@@ -8,7 +8,7 @@
 
 
     <ListView
-        android:id="@+id/lekiListView"
+        android:id="@+id/rachunkiListView"
         android:layout_width="0dp"
         android:layout_height="350dp"
         android:layout_marginBottom="4dp"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lekiListView">
+        app:layout_constraintTop_toBottomOf="@id/rachunkiListView">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
