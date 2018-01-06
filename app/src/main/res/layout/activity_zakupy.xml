@@ -6,53 +6,62 @@
     android:layout_height="match_parent"
     tools:context="com.ick.ick_asystent.Zakupy">
 
-    <ListView
-        android:id="@+id/listaZakupow"
-        android:layout_width="match_parent"
-        android:layout_height="520dp"
-        android:layout_marginTop="8dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/wprowadzRzecz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
     <LinearLayout
-        android:id="@+id/wprowadzRzecz"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listaZakupow">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="255dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Co kupić?"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
-            app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:id="@+id/wprowadzRzecz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/listaZakupow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="80dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="8dp"
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="255dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Co kupić?"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/listaZakupow"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:onClick="onClick_addItem"
+                app:layout_constraintBottom_toTopOf="@+id/listaZakupow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_add" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listaZakupow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:onClick="onClick_addItem"
+            android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_add" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wprowadzRzecz" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -12,11 +12,9 @@ import java.util.ArrayList;
 
 public class Rachunki extends AppCompatActivity {
 
-   // String[] nameArray= {"Prąd", "Gaz"};
-
-    String[] infoArray= {"120.00", "140.00", "260.00"};
-
-    String[] dateArray = {"15.12.2017", "24.12.2017", "3.02.2018"};
+// TODO:
+// Ze względu na strukturę bazy danych, daty przechowywane są jako text.
+// Trzeba ogarnąć w jaki sposób najłatwiej aktualizować datę, dodawać przypomnienia itp dla wszystkich rachunków
 
     ListView listView;
 
@@ -35,7 +33,6 @@ public class Rachunki extends AppCompatActivity {
         super.onStart();
         DBHelper myDB = new DBHelper(getApplicationContext());
 
-        //RachunekListAdapter rachAdp = new RachunekListAdapter(this, nameArray, infoArray, dateArray);
         ArrayList<RachunekDBModel> rachunki = myDB.getAllRachunek();
         String[] nameArray = new String[rachunki.size()];
         RachunekListAdapter rachAdp = new RachunekListAdapter(this, rachunki, nameArray);
@@ -59,3 +56,5 @@ public class Rachunki extends AppCompatActivity {
         startActivity(new Intent(this, SzacRachunki.class));
     }
 }
+
+

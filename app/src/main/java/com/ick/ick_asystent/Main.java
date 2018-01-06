@@ -45,10 +45,11 @@ public class Main extends AppCompatActivity {
     }
 
     public void onClick_Emergency(View view){
-        startActivity(new Intent(this, Emergency.class ));
+        startActivity(new Intent(this, Raportowanie.class ));
     }
 
     public void prepareDB(){
+        // TODO: Wypełnić sensownymi danymi, na tyle żeby pokazać działanie aplikacji.
         DBHelper myDB = new DBHelper(getApplicationContext());
         myDB.createPrzepis("Przepis1", "Latwy", "15 min", "2 filety z kurczaka, Brokuł, śmietana kremówka, serek topiony gouda", "Wrzuć rzeczy razem, a potem je wymieszaj, lol", R.drawable.ic_launcher_foreground);
         myDB.createPrzepis("Przepis2", "Trudny","45 min", "3 plastry schabu, sos z torebki", "Nie wiem, wymyśl sobie coś.",R.drawable.ic_launcher_foreground);
@@ -57,6 +58,8 @@ public class Main extends AppCompatActivity {
         myDB.createPosilek("Sniadanie", 0, "11:00");
         myDB.createPosilek("Obiad", 1, "17:00");
 
+
+        myDB.close();
     }
 
 }

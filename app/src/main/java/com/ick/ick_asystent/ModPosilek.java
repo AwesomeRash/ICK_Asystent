@@ -31,7 +31,7 @@ public class ModPosilek extends AppCompatActivity {
         }
         DBHelper myDB = new DBHelper(getApplicationContext());
         PosilekDBModel posilek = myDB.getPosilekName(nazwa);
-         myDB.close();
+        myDB.close();
 
         posilekID = posilek.id;
 

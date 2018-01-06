@@ -77,6 +77,7 @@ public class Zakupy extends AppCompatActivity {
         String itemTxt= coKupic.getText().toString();
         if(!itemTxt.matches("")) {
             obecnaLista.add(itemTxt);
+            coKupic.setText("");
             _refresh();
         }
     }

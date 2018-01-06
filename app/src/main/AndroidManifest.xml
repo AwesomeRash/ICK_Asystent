@@ -32,8 +32,9 @@
         <activity android:name=".InformacjeLeki" />
         <activity android:name=".SzacRachunki" />
         <activity android:name=".ModPosilek" />
-        <activity android:name=".Dieta"/>
-        <activity android:name=".NowyPosilek"/>
+        <activity android:name=".Dieta" />
+        <activity android:name=".NowyPosilek" />
+        <activity android:name=".Raportowanie"></activity>
     </application>
 
 </manifest>
