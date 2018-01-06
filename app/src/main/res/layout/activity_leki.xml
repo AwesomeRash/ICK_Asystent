@@ -6,43 +6,35 @@
     android:layout_height="match_parent"
     tools:context="com.ick.ick_asystent.Leki">
 
-    <ListView
-        android:id="@+id/lekiListView"
-        style="@style/Widget.AppCompat.ListView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@id/lekiButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <!--android:entries="@array/ListView_Leki">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-    </ListView>
-
-
-    <ScrollView
-        android:id="@+id/lekiButtons"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lekiListView">
-
-        <android.support.constraint.ConstraintLayout
+        <ListView
+            android:id="@+id/lekiListView"
+            style="@style/Widget.AppCompat.ListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_weight="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
+            <!--android:entries="@array/ListView_Leki">-->
+
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/button1"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="40dp"
@@ -60,7 +52,7 @@
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="40dp"
@@ -71,31 +63,12 @@
                 android:text="Znajdź Tańsze"
                 android:textSize="24dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/button3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button1" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="16dp"
-                android:drawableLeft="@android:drawable/ic_menu_info_details"
-                android:onClick="onClick_info"
-                android:text="Informacje"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

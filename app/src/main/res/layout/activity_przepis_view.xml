@@ -5,29 +5,29 @@
     style="@android:style/Widget.DeviceDefault.Light.ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context="com.ick.ick_asystent.PrzepisView">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="com.ick.ick_asystent.przepisView">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/przepisImg"
+            android:id="@+id/przepImg"
             android:layout_width="0dp"
             android:layout_height="155dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toTopOf="@id/skladnikiText"
+            app:layout_constraintBottom_toTopOf="@id/skladText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/editbox_dropdown_light_frame" />
 
         <TextView
-            android:id="@+id/skladnikiText"
+            android:id="@+id/skladText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -35,15 +35,15 @@
             android:layout_marginTop="8dp"
             android:text="This is a sample text. This is a sample text. This is a sample text. This is a sample text. This is a sample text. This is a sample text. This is a sample text. This is a sample text. This is a sample text. This is a sample text. "
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/przepisText"
+            app:layout_constraintBottom_toTopOf="@+id/przepText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/przepisImg"
+            app:layout_constraintTop_toBottomOf="@+id/przepImg"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/przepisText"
+            android:id="@+id/przepText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -52,7 +52,7 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/skladnikiText" />
+            app:layout_constraintTop_toBottomOf="@+id/skladText" />
 
 
     </android.support.constraint.ConstraintLayout>

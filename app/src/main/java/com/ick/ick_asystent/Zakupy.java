@@ -31,6 +31,13 @@ public class Zakupy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    public void onStart(){
+        super.onStart();
 
         SharedPreferences sp = this.getSharedPreferences("com.ick.ick_asystent", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -41,14 +48,14 @@ public class Zakupy extends AppCompatActivity {
 
 
         if (!sp.getBoolean("zakupyEdytowane", false)){
-        String zakupy[] = {"Cukier", "Banany", "Woda", "Mleko", "Masło", "Cukierki", "Wołowina", "Chleb"};
+            String zakupy[] = {"Cukier", "Banany", "Woda", "Mleko", "Masło", "Cukierki", "Wołowina", "Chleb"};
 
-        ArrayList<String> zakupyList = new ArrayList<>();
-        zakupyList.addAll(Arrays.asList(zakupy));
+            ArrayList<String> zakupyList = new ArrayList<>();
+            zakupyList.addAll(Arrays.asList(zakupy));
 
-        obecnaLista = zakupyList;
-        editor.putBoolean("zakupyEdytowane", true);
-        editor.commit();
+            obecnaLista = zakupyList;
+            editor.putBoolean("zakupyEdytowane", true);
+            editor.commit();
         }
         else {
             ArrayList<String> zakupyList = new ArrayList<>();
@@ -61,9 +68,6 @@ public class Zakupy extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
         list.setAdapter(adapter);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 

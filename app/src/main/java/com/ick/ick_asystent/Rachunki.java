@@ -53,7 +53,7 @@ public class Rachunki extends AppCompatActivity {
     }
 
     public void onClick_szacunek(View v){
-        startActivity(new Intent(this, SzacRachunki.class));
+        startActivity(new Intent(this, SzacowanieWydatkow.class));
     }
 }
 

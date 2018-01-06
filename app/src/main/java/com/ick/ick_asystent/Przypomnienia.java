@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 public class Przypomnienia extends AppCompatActivity {
 
@@ -22,5 +23,17 @@ public class Przypomnienia extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(), Main.class);
         startActivityForResult(myIntent, 0);
         return true;
+    }
+
+    public void onClick_myPrzypomnienia(View view){
+        //startActivity(new Intent(this, ));
+    }
+
+    public void onClick_nowePrzypomnienie(View view){
+        startActivity(new Intent(this, NowePrzypomnienie.class));
+    }
+
+    public void onClick_confPrzypomnienia(View view){
+        startActivity(new Intent(this, PrzypomnieniaKonf.class));
     }
 }

@@ -102,4 +102,12 @@
         <item>Zimny Posiłek</item>
         <item>Ciepły Posiłek</item>
     </string-array>
+
+    <string-array name="Szacowanie_Okres">
+        <item>Miesiąc</item>
+        <item>2 miesiące</item>
+        <item>3 miesiące</item>
+        <item>Pół roku</item>
+        <item>Rok</item>
+    </string-array>
 </resources>

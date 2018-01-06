@@ -13,17 +13,6 @@ import java.util.ArrayList;
 
 public class Jedzenie extends AppCompatActivity {
 
-    String[] nameArray = {"Sniadanie","Obiad","Kolacja"};
-
-    String[] infoArray = {
-            "6:30",
-            "13:00",
-            "17:00"
-    };
-
-    Integer[] imageArray = {R.drawable.sniadanie,
-            R.drawable.ic_45471,
-            R.drawable.sniadanie};
 
     ListView listView;
 

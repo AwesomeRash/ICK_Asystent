@@ -14,17 +14,6 @@ import java.util.ArrayList;
 
 public class Leki extends AppCompatActivity {
 
-    String[] nameArray = {"Tabletka 1","Syrop","Tabletka 2"};
-
-    String[] infoArray = {
-            "7:00, 19:00",
-            "20:00",
-            "20:00"
-    };
-
-    Integer[] imageArray = {R.drawable.ic_action_name,
-            R.drawable.syrop,
-            R.drawable.ic_action_name};
 
     ListView listView;
 
@@ -67,11 +56,6 @@ public class Leki extends AppCompatActivity {
     public void onClick_zamienniki(View v){
         startActivity(new Intent(this, ZamiennikiLekow.class));
     }
-
-    public void onClick_info(View v){
-        startActivity(new Intent(this, InformacjeLeki.class));
-    }
-
 
 }
 

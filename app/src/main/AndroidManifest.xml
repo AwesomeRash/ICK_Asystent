@@ -25,16 +25,18 @@
         <activity android:name=".Zakupy" />
         <activity android:name=".Jedzenie" />
         <activity android:name=".Przepisy" />
-        <activity android:name=".przepisView" />
+        <activity android:name=".PrzepisView" />
         <activity android:name=".Profil" />
         <activity android:name=".Przypomnienia" />
         <activity android:name=".NowyLek" />
-        <activity android:name=".InformacjeLeki" />
-        <activity android:name=".SzacRachunki" />
         <activity android:name=".ModPosilek" />
         <activity android:name=".Dieta" />
         <activity android:name=".NowyPosilek" />
-        <activity android:name=".Raportowanie"></activity>
+        <activity android:name=".Raportowanie" />
+        <activity android:name=".SzacowanieWydatkow" />
+        <activity android:name=".RaportowanieKonf" />
+        <activity android:name=".PrzypomnieniaKonf" />
+        <activity android:name=".NowePrzypomnienie" />
     </application>
 
 </manifest>
