@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LEKI_NAME = "leki";
     public static final String RACHUNKI_NAME = "rach";
     public static final String PRZEPISY_NAME = "przepisy";
+    public static final String POSILKI_NAME = "posilki";
 
 
     public DBHelper(Context context){
@@ -34,12 +35,15 @@ public class DBHelper extends SQLiteOpenHelper {
         );
         db.execSQL("create table "+PRZEPISY_NAME+" "+
         "(id integer primary key, nazwa text, trudnosc text, czas text, skladniki text, przepis text, obraz integer)");
+        db.execSQL("create table "+POSILKI_NAME+" "+
+        "(id integer primary key, nazwa text, typ integer, godzina text)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVerion, int newVersion) {
        db.execSQL("DROP TABLE IF EXISTS "+LEKI_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+RACHUNKI_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+PRZEPISY_NAME);
+       db.execSQL("DROP TABLE IF EXISTS "+PRZEPISY_NAME);
+       db.execSQL("DROP TABLE IF EXISTS "+POSILKI_NAME);
        onCreate(db);
     }
 
@@ -308,6 +312,97 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return przepisy;
     }
+
+    // POSILKI
+
+
+    public PosilekDBModel getPosilek(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from "+POSILKI_NAME+" where id="+id+"", null);
+
+        if(res != null)
+            res.moveToFirst();
+
+        PosilekDBModel posilek = new PosilekDBModel(
+                res.getInt(res.getColumnIndex("id")),
+                res.getString(res.getColumnIndex("nazwa")),
+                res.getInt(res.getColumnIndex("typ")),
+                res.getString(res.getColumnIndex("godzina"))
+        );
+
+        return posilek;
+    }
+
+    public PosilekDBModel getPosilekName(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("Select * from "+POSILKI_NAME+" where nazwa LIKE '"+name+"'",null);
+
+        if(res != null)
+            res.moveToFirst();
+
+        PosilekDBModel posilek = new PosilekDBModel(
+                res.getInt(res.getColumnIndex("id")),
+                res.getString(res.getColumnIndex("nazwa")),
+                res.getInt(res.getColumnIndex("typ")),
+                res.getString(res.getColumnIndex("godzina"))
+        );
+
+        return posilek;
+    }
+
+    public boolean updatePosilek(int id, String nazwa, int typ, String godzina){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("godzina",godzina);
+        contentValues.put("typ",typ);
+
+        db.update(POSILKI_NAME, contentValues, "id=?", new String[]{Integer.toString(id)});
+        return true;
+    }
+
+    public long createPosilek(String nazwa, int typ, String godzina){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("godzina",godzina);
+        contentValues.put("typ",typ);
+
+        long db_id= db.insert(POSILKI_NAME, null,contentValues);
+
+        return db_id;
+    }
+
+    public Integer deletePosilek(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(POSILKI_NAME, "id = ?", new String[] {Integer.toString(id)});
+    }
+
+
+    public ArrayList<PosilekDBModel> getAllPosilek(){
+        ArrayList<PosilekDBModel> posilki = new ArrayList<>();
+        String selectQuary = "SELECT * FROM "+POSILKI_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuary,null);
+
+        if(res.moveToFirst()){
+            do{
+                PosilekDBModel pos = new PosilekDBModel(
+                        res.getInt(res.getColumnIndex("id")),
+                        res.getString(res.getColumnIndex("nazwa")),
+                        res.getInt(res.getColumnIndex("typ")),
+                        res.getString(res.getColumnIndex("godzina"))
+                );
+
+                posilki.add(pos);
+            }
+            while(res.moveToNext());
+        }
+        return posilki;
+    }
+
 
 
 

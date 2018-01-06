@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ick.ick_asystent.ModPosilek">
-
+    tools:context="com.ick.ick_asystent.NowyPosilek">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -27,14 +26,21 @@
             android:gravity="center_vertical|fill"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/modPosilekText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/nazwaPosilku"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Posiłek"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 
@@ -47,7 +53,7 @@
             android:showDividers="end">
 
             <TextView
-                android:id="@+id/rodzajPosilkuModText"
+                android:id="@+id/rodzajPosilkuText"
                 android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,7 +64,7 @@
                 tools:layout_editor_absoluteY="182dp" />
 
             <Spinner
-                android:id="@+id/posilekModSpinner"
+                android:id="@+id/posilekSpinner"
                 android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
@@ -75,7 +81,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/kiedyPosilekModText"
+                android:id="@+id/kiedyPosilekText"
                 android:layout_width="191dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -91,7 +97,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/terminPosilkuMod"
+                    android:id="@+id/terminPosilku"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -116,42 +122,19 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <Button
+                android:id="@+id/ConfirmPosilek"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/RemovePosilek"
-                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="64dp"
-                    android:layout_marginStart="64dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="onClick_RemovePosilek"
-                    android:text="Usuń"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <Button
-                    android:id="@+id/ConfirmPosilekMod"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="onClick_confirmPosilekChanges"
-                    android:text="Zatwierdź"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </LinearLayout>
-
+                android:gravity="center"
+                android:onClick="onClick_newMeal"
+                android:text="Zatwierdź"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>

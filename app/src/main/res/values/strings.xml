@@ -97,4 +97,9 @@
         <item>Syrop</item>
         <item>Zastrzyk</item>
     </string-array>
+
+    <string-array name="Posilek_typ">
+        <item>Zimny Posiłek</item>
+        <item>Ciepły Posiłek</item>
+    </string-array>
 </resources>

@@ -60,7 +60,7 @@ public class Przepisy extends AppCompatActivity {
                 String item = adapterView.getItemAtPosition(i).toString();
 
                 Bundle b = new Bundle();
-                b.putString("przepis_name", item); //TODO: Przekazać poprawne ID
+                b.putString("przepis_name", item);
 
                 Intent intent = new Intent(view.getContext(), przepisView.class);
                 intent.putExtras(b);
