@@ -33,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
         "(id integer primary key, nazwa text, ostatnioOplacony text, jakCzesto integer, rachunek1 integer, rachunek2 integer, rachunek3 integer)"
         );
         db.execSQL("create table "+PRZEPISY_NAME+" "+
-        "(id integer primary key, nazwa text, trudnosc text, czas text, składniki text, przepis text, obraz integer)");
+        "(id integer primary key, nazwa text, trudnosc text, czas text, skladniki text, przepis text, obraz integer)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVerion, int newVersion) {
@@ -228,11 +228,24 @@ public class DBHelper extends SQLiteOpenHelper {
         return przepis;
     }
 
-    public int getPrzepisID(String name){
+    public PrzepisDBModel getPrzepisName(String name){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("Select * from "+PRZEPISY_NAME+" where nazwa="+name+"",null);
+        Cursor res = db.rawQuery("Select * from "+PRZEPISY_NAME+" where nazwa LIKE '"+name+"'",null);
 
-        return res.getInt(res.getColumnIndex("id"));
+        if(res != null)
+            res.moveToFirst();
+
+        PrzepisDBModel przepis = new PrzepisDBModel(
+                res.getInt(res.getColumnIndex("id")),
+                res.getString(res.getColumnIndex("nazwa")),
+                res.getString(res.getColumnIndex("trudnosc")),
+                res.getString(res.getColumnIndex("czas")),
+                res.getString(res.getColumnIndex("skladniki")),
+                res.getString(res.getColumnIndex("przepis")),
+                res.getInt(res.getColumnIndex("obraz"))
+        );
+
+        return przepis;
     }
 
     public boolean updatePrzepis(int id, String nazwa, String trudnosc, String czas, String skladniki, String przepis, int obraz){

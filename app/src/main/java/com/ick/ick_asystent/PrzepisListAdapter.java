@@ -46,9 +46,10 @@ public class PrzepisListAdapter extends ArrayAdapter {
 
         for(PrzepisDBModel przep: przepisy){
             name.add(przep.nazwa);
+            System.out.println(przep.nazwa);
             trud.add(przep.trudnosc);
             czas.add(przep.czas);
-            img.add(przep.id);
+            img.add(przep.obraz);
         }
         this.nameArray = name.toArray(new String[name.size()]);
         this.trudArray = trud.toArray(new String[trud.size()]);
@@ -75,6 +76,10 @@ public class PrzepisListAdapter extends ArrayAdapter {
         return rowView;
 
     };
+
+   public String getItem (int position){
+       return nameArray[position];
+    }
 
 
 }

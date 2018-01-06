@@ -52,7 +52,6 @@ public class RachunekListAdapter extends ArrayAdapter {
                 int rachSum = mdl.rachunek1 + mdl.rachunek2 + mdl.rachunek3;
 
                 date.add(mdl.ostatnioOplacony); // ToDo: Do zmiany na poprawną datę w zależności od wybranego typu.
-                System.out.println("NAZWA: "+mdl.nazwa+"        OSTATNIO OPLACONY: "+mdl.ostatnioOplacony);
                 name.add(mdl.nazwa);
                 info.add(Double.toString(rachSum / 3));
             }

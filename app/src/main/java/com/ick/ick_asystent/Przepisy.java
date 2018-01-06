@@ -1,11 +1,15 @@
 package com.ick.ick_asystent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,17 +54,22 @@ public class Przepisy extends AppCompatActivity {
         listView = findViewById(R.id.przepisyList);
         listView.setAdapter(przeAdp);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+
+                Bundle b = new Bundle();
+                b.putString("przepis_name", item); //TODO: Przekazać poprawne ID
+
+                Intent intent = new Intent(view.getContext(), przepisView.class);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+
         myDB.close();
 
     }
 
-    public void onClick_PrzepisListItem(View view){
-        DBHelper myDB = new DBHelper(getApplicationContext());
-        Intent intent = new Intent(this, przepisView.class);
-        Bundle b = new Bundle();
-        b.putInt("przepis_id", 1); //TODO: Przekazać poprawne ID
-        intent.putExtras(b);
-        startActivity(intent);
-
-    }
 }
