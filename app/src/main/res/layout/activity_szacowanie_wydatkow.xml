@@ -37,7 +37,7 @@
             android:id="@+id/textRachunkiSzac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rachunek 1"
+            android:text="W sumie"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
 
@@ -51,5 +51,19 @@
             android:textSize="24sp"
             android:textStyle="bold"
             tools:text="1200 zł" />
+
+        <ListView
+            android:id="@+id/rachunkiListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:entries="@array/ListView_Leki"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ListView>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
