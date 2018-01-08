@@ -46,7 +46,7 @@ public class LekListAdapter extends ArrayAdapter {
             } else if (lek.rodzaj==1){
                 img.add(R.drawable.syrop);
             }else if(lek.rodzaj==2){
-                img.add(R.drawable.ic_sync_black_24dp);
+                img.add(R.drawable.zastrzyk);
             }
 
         }
