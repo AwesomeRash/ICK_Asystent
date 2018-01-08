@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String RACHUNKI_NAME = "rach";
     public static final String PRZEPISY_NAME = "przepisy";
     public static final String POSILKI_NAME = "posilki";
+    public static final String USTAWIENIA_NAME = "ustawienia";
 
 
     public DBHelper(Context context){
@@ -37,6 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
         "(id integer primary key, nazwa text, trudnosc text, czas text, skladniki text, przepis text, obraz integer)");
         db.execSQL("create table "+POSILKI_NAME+" "+
         "(id integer primary key, nazwa text, typ integer, godzina text)");
+        db.execSQL("create table "+USTAWIENIA_NAME+" "+
+        "(id integer primary key, nazwa text, wartosc text)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVerion, int newVersion) {
@@ -44,6 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
        db.execSQL("DROP TABLE IF EXISTS "+RACHUNKI_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+PRZEPISY_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+POSILKI_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+USTAWIENIA_NAME);
        onCreate(db);
     }
 
@@ -403,7 +407,39 @@ public class DBHelper extends SQLiteOpenHelper {
         return posilki;
     }
 
+    public String getSetting(String nazwa){
+        String selectQuery = "SELECT * FROM " + USTAWIENIA_NAME + " WHERE nazwa = '" + nazwa + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        Cursor res = db.rawQuery(selectQuery, null);
+
+        if(res != null)
+            res.moveToFirst();
+        else return null;
+
+        return res.getString(res.getColumnIndex("wartosc"));
+    }
+
+    public boolean updateSetting(int id, String nazwa, String wartosc){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("wartosc", wartosc);
+        db.update(USTAWIENIA_NAME, contentValues, "id=?", new String[]{Integer.toString(id)});
+        return true;
+    }
+
+    public long createSetting(String nazwa, String wartosc){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("wartosc", wartosc);
+
+        long db_id= db.insert(USTAWIENIA_NAME, null,contentValues);
+
+        return db_id;
+    }
 
 
 }

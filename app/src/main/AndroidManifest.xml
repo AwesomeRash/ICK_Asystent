@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".AlarmReciever"/>
         <activity
             android:name=".Main"
             android:theme="@style/Theme.NoTitle">
@@ -38,5 +39,5 @@
         <activity android:name=".PrzypomnieniaKonf" />
         <activity android:name=".NowePrzypomnienie" />
     </application>
-
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 </manifest>

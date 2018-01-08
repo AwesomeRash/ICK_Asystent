@@ -21,9 +21,7 @@ public class Main extends AppCompatActivity {
       prepareDB();
     }
 
-    public void onClick_Leki(View view){
-        startActivity(new Intent(this, Leki.class));
-        }
+    public void onClick_Leki(View view){ startActivity(new Intent(this, Leki.class)); }
 
     public void onClick_Zakupy(View view){
         startActivity(new Intent(this, Zakupy.class));
@@ -37,9 +35,8 @@ public class Main extends AppCompatActivity {
         startActivity(new Intent(this, Jedzenie.class));
     }
 
-    public void onClick_Przypomnienie(View view){
-        startActivity(new Intent(this, Przypomnienia.class));
-    }
+    public void onClick_Przypomnienie(View view){ startActivity(new Intent(this, Przypomnienia.class)); }
+
     public void onClick_Profil(View view){
         startActivity(new Intent (this, Profil.class));
     }
@@ -365,7 +362,7 @@ public class Main extends AppCompatActivity {
         myDB.createPosilek("Sniadanie", 0, "11:00");
         myDB.createPosilek("Obiad", 1, "17:00");
 
-
+        myDB.createSetting("telefon", "123456789");
         myDB.close();
     }
 
