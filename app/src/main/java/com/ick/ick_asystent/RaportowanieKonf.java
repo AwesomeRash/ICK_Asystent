@@ -1,10 +1,14 @@
 package com.ick.ick_asystent;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class RaportowanieKonf extends AppCompatActivity {
@@ -23,9 +27,25 @@ public class RaportowanieKonf extends AppCompatActivity {
         else phone.setText("");
     }
 
+    protected void onStart(){
+        super.onStart();
+
+        SharedPreferences sp = this.getSharedPreferences("com.ick.ick_asystent", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        TextView tv = findViewById(R.id.nrTel);
+        tv.setText(sp.getString("telefon", ""));
+    }
+
     public void onClick_confirm (View view) {
-        if (myDB.getSetting("telefon") != null) myDB.createSetting("telefon", phone.getText().toString());
-        else myDB.updateSetting(0, "telefon", phone.getText().toString());
+        //if (myDB.getSetting("telefon") != null) myDB.createSetting("telefon", phone.getText().toString());
+        //else myDB.updateSetting(0, "telefon", phone.getText().toString());
+        SharedPreferences sp = this.getSharedPreferences("com.ick.ick_asystent", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString("telefon", phone.getText().toString());
+        editor.commit();
+        startActivity(new Intent(this, Raportowanie.class));
     }
 
     public void onClick_test(View view) {
@@ -36,6 +56,7 @@ public class RaportowanieKonf extends AppCompatActivity {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
             Toast.makeText(getApplicationContext(), "SMS Sent!",
                     Toast.LENGTH_LONG).show();
         } catch (Exception e) {
