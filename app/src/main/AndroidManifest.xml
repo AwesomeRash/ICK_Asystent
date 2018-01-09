@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ick.ick_asystent">
 
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".AlarmReciever"/>
+        <receiver android:name=".AlarmReciever" />
+
         <activity
             android:name=".Main"
             android:theme="@style/Theme.NoTitle">
@@ -38,6 +41,13 @@
         <activity android:name=".RaportowanieKonf" />
         <activity android:name=".PrzypomnieniaKonf" />
         <activity android:name=".NowePrzypomnienie" />
+
+        <service
+            android:name=".ReportingService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".ReportingPopup" android:theme="@android:style/Theme.Dialog"></activity>
     </application>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+
 </manifest>

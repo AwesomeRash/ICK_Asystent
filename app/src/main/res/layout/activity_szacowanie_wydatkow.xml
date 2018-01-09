@@ -37,9 +37,9 @@
             android:id="@+id/textRachunkiSzac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="W sumie"
+            android:text="W sumie:"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textKwotaSzac"
@@ -48,9 +48,13 @@
             android:gravity="center_horizontal"
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"
+            android:textSize="36sp"
             android:textStyle="bold"
             tools:text="1200 zł" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
 
         <ListView
             android:id="@+id/rachunkiListView"

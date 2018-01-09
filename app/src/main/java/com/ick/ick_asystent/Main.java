@@ -19,6 +19,8 @@ public class Main extends AppCompatActivity {
         myDB.close();
 
       prepareDB();
+
+
     }
 
     public void onClick_Leki(View view){ startActivity(new Intent(this, Leki.class)); }
