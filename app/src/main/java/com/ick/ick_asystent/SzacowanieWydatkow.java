@@ -8,7 +8,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 //TODO: Szacowanie na podstawie terminów kolejnych rachunków.
 //Zmiana automatycznie przy wybraniu opcji na dropdownie
@@ -20,6 +25,8 @@ public class SzacowanieWydatkow extends AppCompatActivity {
     DBHelper myDB;
     ListView listView;
     float suma[] = {0, 0, 0, 0, 0};
+    double billSum=0.0;
+    TextView srednia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +40,14 @@ public class SzacowanieWydatkow extends AppCompatActivity {
         myDB = new DBHelper(getApplicationContext());
 
         ArrayList<RachunekDBModel> rachunki = myDB.getAllRachunek();
-        final TextView srednia = findViewById(R.id.textKwotaSzac);
-        Spinner spinner = findViewById(R.id.szacowanieSpinner);
+        srednia = findViewById(R.id.textKwotaSzac);
+        listView = findViewById(R.id.rachunkiListView);
+        final Spinner spinner = findViewById(R.id.szacowanieSpinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                srednia.setText(Float.toString(suma[position]));
-                updateList(position);
+                System.out.println(spinner.getSelectedItemPosition()+ "    -    " + spinner.getSelectedItem().toString());
+                countBills();
             }
 
             @Override
@@ -47,26 +55,100 @@ public class SzacowanieWydatkow extends AppCompatActivity {
             }
 
         });
-        for (RachunekDBModel rachunek : rachunki) {
-            for (int i=0; i <= 3; i++) {
-                if (rachunek.jakCzesto == i) {
-                    suma[i] += (rachunek.rachunek1 + rachunek.rachunek2 + rachunek.rachunek3) / 3;
-                }
-            }
-            suma[4] = suma[3] * 2;
-        }
+
+        countBills();
 
     }
 
-    public void updateList(int id){
-        listView = findViewById(R.id.rachunkiListView);
-        ArrayList<RachunekDBModel> rachunki = myDB.getAllRachunek();
-        ArrayList<RachunekDBModel> rachunkicpy = new ArrayList<RachunekDBModel>();
-        for (RachunekDBModel rach : rachunki) {
-            if (rach.jakCzesto == id) rachunkicpy.add(rach);
+
+    public void countBills(){
+        billSum = 0.0;
+
+        myDB = new DBHelper(getApplicationContext());
+        Calendar paymentCal = Calendar.getInstance();
+        ArrayList<RachunekDBModel> displayArrayList = new ArrayList<RachunekDBModel>();
+        Spinner spinnerSzacowania = findViewById(R.id.szacowanieSpinner);
+        int okresSzacowania = spinnerSzacowania.getSelectedItemPosition();
+
+        if(okresSzacowania == 0){
+            paymentCal.add(Calendar.MONTH, 1);
+        }else if(okresSzacowania == 1){
+            paymentCal.add(Calendar.MONTH, 2);
+        }else if (okresSzacowania == 2){
+            paymentCal.add(Calendar.MONTH, 3);
+        }else if (okresSzacowania == 3){
+            paymentCal.add(Calendar.MONTH, 6);
+        } else if (okresSzacowania == 4){
+            paymentCal.add(Calendar.MONTH, 12);
         }
-        String[] nameArray = new String[rachunkicpy.size()];
-        RachunekListAdapter rachAdp = new RachunekListAdapter(this, rachunkicpy, nameArray);
+
+
+        ArrayList<RachunekDBModel> rachunki = myDB.getAllRachunek();
+
+        for(RachunekDBModel mdl : rachunki) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Double avg = (mdl.rachunek1+mdl.rachunek2+mdl.rachunek3)/3.0;
+            try{
+                Date data = formatter.parse(mdl.ostatnioOplacony);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(data);
+
+                if(cal.before(paymentCal)){
+                    int monthsBetween = paymentCal.get(Calendar.MONTH) - cal.get(Calendar.MONTH) + 12*(paymentCal.get(Calendar.YEAR)-cal.get(Calendar.YEAR));
+
+
+                    if(mdl.jakCzesto == 0){
+                        Double wysokosc = monthsBetween*avg;
+
+                        System.out.println("Months Between: "+monthsBetween  + "AVG: "+avg);
+                        if(monthsBetween!= 0){
+                            billSum += wysokosc;
+                            displayArrayList.add(mdl);
+                        }
+
+                    }else if(mdl.jakCzesto == 1){
+                        Integer okresy = (monthsBetween/2);
+                                Double wysokosc = okresy*avg;
+
+
+                        if(okresy != 0){
+                            billSum += wysokosc;
+                            displayArrayList.add(mdl);
+                        }
+
+                    }else if (mdl.jakCzesto == 2){
+                        Integer okresy = (monthsBetween/3);
+                        Double wysokosc = okresy*avg;
+
+                        if(okresy != 0){
+                            billSum += wysokosc;
+                            displayArrayList.add(mdl);
+                        }
+
+                    }else if (mdl.jakCzesto == 3){
+                        Integer okresy = (monthsBetween/6);
+                        Double wysokosc = okresy*avg;
+
+                        if(okresy != 0){
+                            billSum += wysokosc;
+                            displayArrayList.add(mdl);
+                        }
+                    }
+                }
+
+            } catch (ParseException e){
+                e.printStackTrace();
+            }
+
+        }
+
+        String[] nameArray = new String[displayArrayList.size()];
+        RachunekListAdapter rachAdp = new RachunekListAdapter(this, displayArrayList, nameArray);
         listView.setAdapter(rachAdp);
+
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        srednia.setText(df.format(billSum)+" zł");
+        myDB.close();
     }
 }

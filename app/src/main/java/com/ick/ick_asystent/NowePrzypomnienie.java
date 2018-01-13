@@ -23,14 +23,14 @@ public class NowePrzypomnienie extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nowe_przypomnienie);
-        createChannels();
+       // createChannels();
     }
 
     public void dodajPrzyp(View view) {
 
     }
 
-    public void createChannels() {
+   /* public void createChannels() {
 
         // create android channel
         NotificationChannel androidChannel = new NotificationChannel(ANDROID_CHANNEL_ID,
@@ -62,4 +62,5 @@ public class NowePrzypomnienie extends AppCompatActivity {
         }
         return mManager;
     }
+    */
 }

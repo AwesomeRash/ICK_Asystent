@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Roderick on 27.11.2017.
  */
@@ -34,6 +36,33 @@ public class ZamiennikiListAdapter extends ArrayAdapter {
         this.nameArray = nameArrayParam;
         this.iloscArray = iloscArrayParam;
 
+    }
+
+    public ZamiennikiListAdapter(Activity context, ArrayList<LekarstwoDBModel> lekarstwa, String[] nameArrayParam){
+        super(context, R.layout.listview_row, nameArrayParam);
+
+        this.context = context;
+
+        ArrayList<String> name = new ArrayList<>();
+        ArrayList<String> opakowanie = new ArrayList<>();
+        ArrayList<String> cena = new ArrayList<>();
+
+        if(lekarstwa.size()!=0){
+            for(LekarstwoDBModel mdl: lekarstwa){
+                name.add(mdl.nazwa);
+                opakowanie.add(mdl.opakowanie);
+                cena.add(Double.toString(mdl.cena)+" zł");
+            }
+
+            this.nameArray = name.toArray(new String[name.size()]);
+            this.iloscArray = opakowanie.toArray(new String[opakowanie.size()]);
+            this.cenaArray = cena.toArray(new String[cena.size()]);
+        }
+        else{
+            nameArray = new String[]{};
+            iloscArray = new String []{};
+            cenaArray = new String []{};
+        }
     }
 
     public View getView(int position, View view, ViewGroup parent) {

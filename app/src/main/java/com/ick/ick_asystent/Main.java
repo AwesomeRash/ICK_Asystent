@@ -15,7 +15,7 @@ public class Main extends AppCompatActivity {
 
         // TYLKO DO TESTOWANIA/USUWANIA RZECZY.
         DBHelper myDB = new DBHelper(getApplicationContext());
-        myDB.resetDB();
+       // myDB.resetDB();
         myDB.close();
 
       prepareDB();
@@ -364,7 +364,21 @@ public class Main extends AppCompatActivity {
         myDB.createPosilek("Sniadanie", 0, "11:00");
         myDB.createPosilek("Obiad", 1, "17:00");
 
-        myDB.createSetting("telefon", "123456789");
+
+
+        myDB.createLekarstwo("Aurorix 150", "Moclobemide", "30 szt.", 11.36);
+        myDB.createLekarstwo("Aurorix 300", "Moclobemide", "30 szt.", 22.55);
+        myDB.createLekarstwo("Mobemid", "Moclobemide", "30 szt.", 5.25);
+        myDB.createLekarstwo("Moklar", "Moclobemide", "30 szt.", 5.03);
+
+        myDB.createLekarstwo("Cezera", "Levocetirizine", "20 szt.", 9.89);
+        myDB.createLekarstwo("Ahist","Levocetirizine", "20 szt.", 7.02);
+        myDB.createLekarstwo("Contrahist", "Levocetirizine", "7 szt.", 8.00);
+        myDB.createLekarstwo("Lecetax", "Levocetirizine", "28 szt.", 7.39);
+        myDB.createLekarstwo("Lirra", "Levocetirizine", "28 szt.", 27.50);
+        myDB.createLekarstwo("Nossin", "Levocetirizine", "28 szt.", 8.16);
+        myDB.createLekarstwo("Xyzal", "Levocetirizine", "7 szt.", 6.61);
+
         myDB.close();
     }
 

@@ -5,9 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Roderick on 05.01.2018.
@@ -20,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PRZEPISY_NAME = "przepisy";
     public static final String POSILKI_NAME = "posilki";
     public static final String USTAWIENIA_NAME = "ustawienia";
+    public static final String LEKARSTWA_NAME = "lekarstwa";
 
 
     public DBHelper(Context context){
@@ -29,17 +38,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+LEKI_NAME+" "+
-        "(id integer primary key, nazwa text, rodzaj integer, koniecPrzyjmowania text,kiedy text)"
-        );
+        "(id integer primary key, nazwa text, rodzaj integer, koniecPrzyjmowania text,kiedy text)");
         db.execSQL("create table "+RACHUNKI_NAME+" "+
-        "(id integer primary key, nazwa text, ostatnioOplacony text, jakCzesto integer, rachunek1 integer, rachunek2 integer, rachunek3 integer)"
-        );
+        "(id integer primary key, nazwa text, ostatnioOplacony text, jakCzesto integer, rachunek1 integer, rachunek2 integer, rachunek3 integer)");
         db.execSQL("create table "+PRZEPISY_NAME+" "+
         "(id integer primary key, nazwa text, trudnosc text, czas text, skladniki text, przepis text, obraz integer)");
         db.execSQL("create table "+POSILKI_NAME+" "+
         "(id integer primary key, nazwa text, typ integer, godzina text)");
         db.execSQL("create table "+USTAWIENIA_NAME+" "+
         "(id integer primary key, nazwa text, wartosc text)");
+        db.execSQL("create table "+LEKARSTWA_NAME+" "+
+        "(id integer primary key, nazwa text, skl_aktywny text, opakowanie text, cena real)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVerion, int newVersion) {
@@ -47,7 +56,8 @@ public class DBHelper extends SQLiteOpenHelper {
        db.execSQL("DROP TABLE IF EXISTS "+RACHUNKI_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+PRZEPISY_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+POSILKI_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+USTAWIENIA_NAME);
+       db.execSQL("DROP TABLE IF EXISTS "+USTAWIENIA_NAME);
+       db.execSQL("DROP TABLE IF EXISTS "+LEKARSTWA_NAME);
        onCreate(db);
     }
 
@@ -62,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // inne metody do obsługi DB idą tutaj
 
 
-    // LEKARSTWA
+    // LEKI PRZYJMOWANE
     public LekDBModel getLek(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from "+LEKI_NAME+" where id="+id+"", null);
@@ -169,10 +179,24 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long createRachunek(String nazwa,String ostatnioOplacony, Integer jakCzesto, Integer rachunek1, Integer rachunek2, Integer rachunek3){
         SQLiteDatabase db = this.getWritableDatabase();
+        String nowaData="";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        try{
+            Date data = formatter.parse(ostatnioOplacony);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(data);
+            cal.add(Calendar.MONTH, 1);
+            data= cal.getTime();
+
+            nowaData = formatter.format(data);
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("nazwa",nazwa);
-        contentValues.put("ostatnioOplacony",ostatnioOplacony);
+        contentValues.put("ostatnioOplacony",nowaData);
         contentValues.put("jakCzesto",jakCzesto);
         contentValues.put("rachunek1",rachunek1);
         contentValues.put("rachunek2",rachunek2);
@@ -440,6 +464,126 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return db_id;
     }
+
+    // LEKARSTWA W BAZIE
+
+    public LekarstwoDBModel getLekarstwo(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from "+LEKARSTWA_NAME+" where id="+id+"", null);
+
+        if(res != null)
+            res.moveToFirst();
+
+        LekarstwoDBModel lekarstwoDBModel = new LekarstwoDBModel(res.getInt(res.getColumnIndex("id")),
+                                                                res.getString(res.getColumnIndex("nazwa")),
+                                                                res.getString(res.getColumnIndex("skl_aktywny")),
+                                                                res.getString(res.getColumnIndex("opakowanie")),
+                                                                res.getDouble(res.getColumnIndex("cena"))
+                                                                );
+
+        return lekarstwoDBModel;
+    }
+
+    public LekarstwoDBModel getLekarstwoName(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from "+LEKARSTWA_NAME+" where nazwa LIKE '"+name+"'", null);
+
+        if(!(res.getCount()==0)) {
+            res.moveToFirst();
+
+            LekarstwoDBModel lekarstwoDBModel = new LekarstwoDBModel(res.getInt(res.getColumnIndex("id")),
+                    res.getString(res.getColumnIndex("nazwa")),
+                    res.getString(res.getColumnIndex("skl_aktywny")),
+                    res.getString(res.getColumnIndex("opakowanie")),
+                    res.getDouble(res.getColumnIndex("cena"))
+            );
+
+
+            return lekarstwoDBModel;
+        }
+        else return null;
+    }
+
+    public boolean updateLekarstwo(Integer id, String nazwa, String skl_aktywny, String opakowanie, Double cena){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa",nazwa);
+        contentValues.put("skl_aktywny", skl_aktywny);
+        contentValues.put("opakowanie", opakowanie);
+        contentValues.put("cena", cena);
+
+        db.update(LEKARSTWA_NAME, contentValues, "id=?", new String[]{Integer.toString(id)});
+        return true;
+    }
+
+    public long createLekarstwo(String nazwa, String skl_aktywny, String opakowanie, Double cena){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa",nazwa);
+        contentValues.put("skl_aktywny", skl_aktywny);
+        contentValues.put("opakowanie", opakowanie);
+        contentValues.put("cena", cena);
+
+        long db_id = db.insert(LEKARSTWA_NAME, null, contentValues);
+        return db_id;
+    }
+
+    public Integer deleteLekarstwo(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(LEKARSTWA_NAME, "id =?", new String[]{Integer.toString(id)});
+    }
+
+    public ArrayList<LekarstwoDBModel> getAllLekarstwo(){
+        ArrayList<LekarstwoDBModel> arrayList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM "+LEKARSTWA_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuery, null);
+
+        if(res.moveToFirst()){
+            do{
+            LekarstwoDBModel lekarstwoDBModel = new LekarstwoDBModel(res.getInt(res.getColumnIndex("id")),
+                    res.getString(res.getColumnIndex("nazwa")),
+                    res.getString(res.getColumnIndex("skl_aktywny")),
+                    res.getString(res.getColumnIndex("opakowanie")),
+                    res.getDouble(res.getColumnIndex("cena"))
+                    );
+            arrayList.add(lekarstwoDBModel);
+            }
+            while(res.moveToNext());
+        }
+        return arrayList;
+    }
+
+    public ArrayList<LekarstwoDBModel> getAllZamienniki(String nazwa){
+        ArrayList<LekarstwoDBModel> arrayList = new ArrayList<>();
+
+        LekarstwoDBModel lekarstwo = getLekarstwoName(nazwa);
+        if(lekarstwo!=null){
+        String substancjaAktywna = lekarstwo.skl_aktywny;
+        String selectQuery = "SELECT * FROM "+LEKARSTWA_NAME+" WHERE skl_aktywny LIKE '"+substancjaAktywna+"'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuery, null);
+
+        if(res.moveToFirst()){
+            do{
+                LekarstwoDBModel lekarstwoDBModel = new LekarstwoDBModel(res.getInt(res.getColumnIndex("id")),
+                        res.getString(res.getColumnIndex("nazwa")),
+                        res.getString(res.getColumnIndex("skl_aktywny")),
+                        res.getString(res.getColumnIndex("opakowanie")),
+                        res.getDouble(res.getColumnIndex("cena"))
+                );
+                arrayList.add(lekarstwoDBModel);
+            }
+            while(res.moveToNext());
+        }
+        }
+        return arrayList;
+
+
+    }
+
 
 
 }
