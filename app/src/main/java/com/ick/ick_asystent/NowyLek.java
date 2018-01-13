@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class NowyLek extends AppCompatActivity {
@@ -80,11 +82,11 @@ public class NowyLek extends AppCompatActivity {
         TextView text4 = findViewById(R.id.terminLeku2);
         TextView text5 = findViewById(R.id.terminLeku3);
 
-        Pattern p = Pattern.compile("^((?:[01]\\d|2[0-3]):[0-5]\\d)");
+        Pattern p = Pattern.compile("^((?:[01]?\\d|2[0-3]):[0-5]\\d)");
         if(text1.getText().length()==0 || text3.getText().length()==0)
         {
             Toast.makeText(getApplicationContext(), "Podaj potrzebne informacje", Toast.LENGTH_SHORT).show();
-        }else if((!text5.getText().toString().equals("") && !p.matcher(text3.getText().toString()).matches()) ||(!text5.getText().toString().equals("") &&  !p.matcher(text4.getText().toString()).matches())|| (!text5.getText().toString().equals("") && !p.matcher(text5.getText().toString()).matches())){
+        }else if((!text3.getText().toString().equals("") && !p.matcher(text3.getText().toString()).matches()) ||(!text4.getText().toString().equals("") &&  !p.matcher(text4.getText().toString()).matches())|| (!text5.getText().toString().equals("") && !p.matcher(text5.getText().toString()).matches())){
             Toast.makeText(getApplicationContext(), "Niepoprawny format godziny", Toast.LENGTH_SHORT).show();
         }else{
         // TODO: Dodanie alarmów przy dodawaniu leku
@@ -95,6 +97,19 @@ public class NowyLek extends AppCompatActivity {
                 text3.getText().toString()+" "+text4.getText().toString()+" "+text5.getText().toString()
                 );
 
+        String powiadomienieText = "Zażyj "+text1.getText().toString()+" !";
+        Calendar myCalendar = Calendar.getInstance();
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            String formattedDate = format.format(myCalendar.getTime());
+
+           myDB.createPowiadomienie(powiadomienieText, formattedDate+" "+text3.getText().toString(), 1, 1);
+        if(!text4.getText().toString().equals(""))
+            myDB.createPowiadomienie(powiadomienieText, formattedDate+" "+text4.getText().toString(), 1, 1);
+        if(!text5.getText().toString().equals(""))
+            myDB.createPowiadomienie(powiadomienieText, formattedDate+" "+text5.getText().toString(), 1, 1);
+
         startActivity(new Intent(this, Leki.class));
+
+        myDB.close();
     }}
 }

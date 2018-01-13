@@ -8,6 +8,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class NowyRachunek extends AppCompatActivity {
@@ -45,7 +49,28 @@ public class NowyRachunek extends AppCompatActivity {
 
         );
 
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            String nowaData="";
+            try{
+                Date data = formatter.parse(text2.getText().toString());
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(data);
+                cal.add(Calendar.MONTH, 1);
+                cal.add(Calendar.DAY_OF_MONTH, -3);
+                data=cal.getTime();
+                nowaData = formatter.format(data);
+            } catch (ParseException e){
+                e.printStackTrace();
+            }
+
+            String powiadomienie = "Zbliża się termin płatności rachunku: "+text1.getText().toString();
+            myDB.createPowiadomienie(powiadomienie, nowaData+" 12:00", 0,1);
+
+        myDB.close();
         startActivity(new Intent(this, Rachunki.class));
+
     }else{
             Toast.makeText(getApplicationContext(), "Niepoprawny format daty", Toast.LENGTH_SHORT).show();
         }

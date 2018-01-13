@@ -26,7 +26,7 @@ public class Przypomnienia extends AppCompatActivity {
     }
 
     public void onClick_myPrzypomnienia(View view){
-        //startActivity(new Intent(this, ));
+        startActivity(new Intent(this, PrzypomnienieDisplay.class));
     }
 
     public void onClick_nowePrzypomnienie(View view){

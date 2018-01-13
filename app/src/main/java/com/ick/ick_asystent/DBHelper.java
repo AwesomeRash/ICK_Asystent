@@ -9,6 +9,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.sql.SQLInput;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String POSILKI_NAME = "posilki";
     public static final String USTAWIENIA_NAME = "ustawienia";
     public static final String LEKARSTWA_NAME = "lekarstwa";
+    public static final String POWIADOMIENIA_NAME = "powiadomienia";
 
 
     public DBHelper(Context context){
@@ -49,6 +51,8 @@ public class DBHelper extends SQLiteOpenHelper {
         "(id integer primary key, nazwa text, wartosc text)");
         db.execSQL("create table "+LEKARSTWA_NAME+" "+
         "(id integer primary key, nazwa text, skl_aktywny text, opakowanie text, cena real)");
+        db.execSQL("create table "+POWIADOMIENIA_NAME+" "+
+        "(id integer primary key, nazwa text, kiedy text, powtarzalne integer, aktywne integer)");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVerion, int newVersion) {
@@ -58,6 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
        db.execSQL("DROP TABLE IF EXISTS "+POSILKI_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+USTAWIENIA_NAME);
        db.execSQL("DROP TABLE IF EXISTS "+LEKARSTWA_NAME);
+       db.execSQL("DROP TABLE IF EXISTS "+POWIADOMIENIA_NAME);
        onCreate(db);
     }
 
@@ -580,9 +585,84 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         }
         return arrayList;
+    }
 
+
+    // POWIADOMIENIA
+
+    public PowiadomienieDBModel getPowiadomienie(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM "+POWIADOMIENIA_NAME+" WHERE id="+id+"",null);
+
+        if(res != null)
+            res.moveToFirst();
+
+        PowiadomienieDBModel powiadomienieDBModel = new PowiadomienieDBModel(res.getInt(res.getColumnIndex("id")),
+                                                                            res.getString(res.getColumnIndex("nazwa")),
+                                                                            res.getString(res.getColumnIndex("kiedy")),
+                                                                            res.getInt(res.getColumnIndex("powtarzalne")),
+                                                                            res.getInt(res.getColumnIndex("aktywne"))
+                                                                    );
+
+        return powiadomienieDBModel;
+    }
+
+    public boolean updatePowiadomienie(Integer id, String nazwa, String kiedy, Integer powtarzalne, Integer aktywne){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("kiedy", kiedy);
+        contentValues.put("powtarzalne", powtarzalne);
+        contentValues.put("aktywne", aktywne);
+
+        db.update(POWIADOMIENIA_NAME, contentValues, "id=?", new String[]{Integer.toString(id)});
+        return true;
+    }
+
+    public long createPowiadomienie(String nazwa, String kiedy, Integer powtarzalne, Integer aktywne){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nazwa", nazwa);
+        contentValues.put("kiedy", kiedy);
+        contentValues.put("powtarzalne", powtarzalne);
+        contentValues.put("aktywne", aktywne);
+
+        long db_id = db.insert(POWIADOMIENIA_NAME, null, contentValues);
+        return db_id;
+    }
+
+    public Integer deletePowiadomienie(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(POWIADOMIENIA_NAME, "id=?", new String[]{Integer.toString(id)});
+    }
+
+    public ArrayList<PowiadomienieDBModel> getAllPowiadomienie(){
+        ArrayList<PowiadomienieDBModel> arrayList = new ArrayList<>();
+        String selectQuary = "SELECT * FROM "+POWIADOMIENIA_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(selectQuary, null);
+
+        if(res.moveToFirst()){
+            do{
+                PowiadomienieDBModel powiadomienieDBModel = new PowiadomienieDBModel(res.getInt(res.getColumnIndex("id")),
+                        res.getString(res.getColumnIndex("nazwa")),
+                        res.getString(res.getColumnIndex("kiedy")),
+                        res.getInt(res.getColumnIndex("powtarzalne")),
+                        res.getInt(res.getColumnIndex("aktywne"))
+                );
+                arrayList.add(powiadomienieDBModel);
+            }
+            while(res.moveToNext());
+        }
+        return arrayList;
 
     }
+
+
+
 
 
 

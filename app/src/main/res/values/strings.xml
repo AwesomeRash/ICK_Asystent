@@ -110,4 +110,5 @@
         <item>Pół roku</item>
         <item>Rok</item>
     </string-array>
+    <string name="title_activity_przypomnienie_display">PrzypomnienieDisplay</string>
 </resources>

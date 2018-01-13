@@ -15,7 +15,7 @@ public class Main extends AppCompatActivity {
 
         // TYLKO DO TESTOWANIA/USUWANIA RZECZY.
         DBHelper myDB = new DBHelper(getApplicationContext());
-       // myDB.resetDB();
+        //myDB.resetDB();
         myDB.close();
 
       prepareDB();
