@@ -38,7 +38,7 @@ public class PosilekListAdapter extends ArrayAdapter {
             if(pos.typ == 0){
                 img.add(R.drawable.sniadanie);
             } else if (pos.typ==1) {
-                img.add(R.drawable.ic_45471);
+                img.add(R.drawable.obiad);
             }
         }
         this.nameArray = name.toArray(new String[name.size()]);

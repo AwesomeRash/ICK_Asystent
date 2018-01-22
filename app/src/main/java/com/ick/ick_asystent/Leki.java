@@ -25,6 +25,7 @@ public class Leki extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
     }
 
     @Override
