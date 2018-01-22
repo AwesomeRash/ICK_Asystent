@@ -14,11 +14,11 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // TYLKO DO TESTOWANIA/USUWANIA RZECZY.
-        DBHelper myDB = new DBHelper(getApplicationContext());
+        //DBHelper myDB = new DBHelper(getApplicationContext());
         //myDB.resetDB();
-        myDB.close();
+        //myDB.close();
 
-      prepareDB();
+        //prepareDB();
 
 
     }

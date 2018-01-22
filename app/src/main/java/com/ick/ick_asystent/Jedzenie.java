@@ -31,7 +31,8 @@ public class Jedzenie extends AppCompatActivity {
         super.onStart();
 
         DBHelper myDB = new DBHelper(getApplicationContext());
-        ArrayList<PosilekDBModel> posilki = myDB.getAllPosilek();
+        ArrayList<PosilekDBModel> posilki = new ArrayList<PosilekDBModel>();
+                posilki = myDB.getAllPosilek();
         String[] nameArray = new String[posilki.size()];
         PosilekListAdapter listAdapter = new PosilekListAdapter(this, posilki, nameArray);
         listView = findViewById(R.id.rachunkiListView);

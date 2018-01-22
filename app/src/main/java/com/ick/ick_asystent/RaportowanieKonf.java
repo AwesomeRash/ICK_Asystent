@@ -23,8 +23,6 @@ public class RaportowanieKonf extends AppCompatActivity {
         phone = findViewById(R.id.nrTel);
         myDB = new DBHelper(getApplicationContext());
 
-        if (myDB.getSetting("telefon") != null) phone.setText(myDB.getSetting("telefon"));
-        else phone.setText("");
     }
 
     protected void onStart(){
@@ -49,7 +47,10 @@ public class RaportowanieKonf extends AppCompatActivity {
     }
 
     public void onClick_test(View view) {
-        sendSMS(myDB.getSetting("telefon"), "Test wiadomości alarmowej");
+        SharedPreferences sp = this.getSharedPreferences("com.ick.ick_asystent", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        sendSMS(sp.getString("telefon", ""), "Test wiadomości alarmowej");
     }
 
     private void sendSMS(String phoneNumber, String message) {

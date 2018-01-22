@@ -24,6 +24,7 @@ public class PosilekListAdapter extends ArrayAdapter {
     public PosilekListAdapter(Activity context, ArrayList<PosilekDBModel> posilki, String[] nameArray){
         super(context,R.layout.listview_row, nameArray);
 
+        System.out.println("LICZBA POSILKOW: " + posilki.size());
         this.context=context;
         ArrayList<String> name = new ArrayList<>();
         ArrayList<String> info = new ArrayList<>();
