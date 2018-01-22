@@ -29,7 +29,7 @@ public class LekListAdapter extends ArrayAdapter {
     private final String[] infoArray;
 
     public LekListAdapter(Activity context, ArrayList<LekDBModel> leki, String[] nameArray){
-        super(context,R.layout.listview_row, nameArray);
+        super(context,R.layout.lek_row, nameArray);
 
         this.context=context;
         ArrayList<String> name = new ArrayList<>();
@@ -57,7 +57,7 @@ public class LekListAdapter extends ArrayAdapter {
 
     public LekListAdapter(Activity context, String[] nameArrayParam, String[] infoArrayParam, Integer[] imageIDArrayParam){
 
-        super(context,R.layout.listview_row , nameArrayParam);
+        super(context,R.layout.lek_row , nameArrayParam);
 
         this.context=context;
         this.imageIDarray = imageIDArrayParam;
@@ -68,7 +68,7 @@ public class LekListAdapter extends ArrayAdapter {
 
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.listview_row, null,true);
+        View rowView=inflater.inflate(R.layout.lek_row, null,true);
 
 
         TextView nameTextField = (TextView) rowView.findViewById(R.id.nameTextViewID);
