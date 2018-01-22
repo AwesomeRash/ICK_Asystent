@@ -23,4 +23,11 @@ public class Profil extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
         return true;
     }
+
+
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

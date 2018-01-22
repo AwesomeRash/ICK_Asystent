@@ -72,4 +72,11 @@ public class Jedzenie extends AppCompatActivity {
     public void onClick_nowyPosilek(View v){
         startActivity(new Intent(this, NowyPosilek.class));
     }
+
+
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

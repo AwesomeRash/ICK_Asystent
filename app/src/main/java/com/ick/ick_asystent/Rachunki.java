@@ -55,6 +55,13 @@ public class Rachunki extends AppCompatActivity {
     public void onClick_szacunek(View v){
         startActivity(new Intent(this, SzacowanieWydatkow.class));
     }
+
+
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }
 
 

@@ -36,4 +36,11 @@ public class Przypomnienia extends AppCompatActivity {
     public void onClick_confPrzypomnienia(View view){
         startActivity(new Intent(this, PrzypomnieniaKonf.class));
     }
+
+
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

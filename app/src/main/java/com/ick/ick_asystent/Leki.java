@@ -58,6 +58,11 @@ public class Leki extends AppCompatActivity {
         startActivity(new Intent(this, ZamiennikiLekow.class));
     }
 
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }
 
 

@@ -18,25 +18,31 @@
             android:theme="@style/Theme.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Leki" />
+        <activity android:name=".Leki"
+            android:parentActivityName=".Main"/>
         <activity android:name=".ZamiennikiLekow" />
-        <activity android:name=".Rachunki" />
+        <activity android:name=".Rachunki"
+            android:parentActivityName=".Main" />
         <activity android:name=".NowyRachunek" />
-        <activity android:name=".Zakupy" />
-        <activity android:name=".Jedzenie" />
+        <activity android:name=".Zakupy"
+            android:parentActivityName=".Main" />
+        <activity android:name=".Jedzenie"
+            android:parentActivityName=".Main" />
         <activity android:name=".Przepisy" />
         <activity android:name=".PrzepisView" />
-        <activity android:name=".Profil" />
-        <activity android:name=".Przypomnienia" />
+        <activity android:name=".Profil"
+            android:parentActivityName=".Main" />
+        <activity android:name=".Przypomnienia"
+            android:parentActivityName=".Main" />
         <activity android:name=".NowyLek" />
         <activity android:name=".ModPosilek" />
         <activity android:name=".Dieta" />
         <activity android:name=".NowyPosilek" />
-        <activity android:name=".Raportowanie" />
+        <activity android:name=".Raportowanie"
+            android:parentActivityName=".Main" />
         <activity android:name=".SzacowanieWydatkow" />
         <activity android:name=".RaportowanieKonf" />
         <activity android:name=".PrzypomnieniaKonf" />
